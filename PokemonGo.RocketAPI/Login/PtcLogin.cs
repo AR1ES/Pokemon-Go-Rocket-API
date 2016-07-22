@@ -28,7 +28,11 @@ namespace PokemonGo.RocketAPI.Login
                 var data = await sessionResp.Content.ReadAsStringAsync();
                 var lt = JsonHelper.GetValue(data, "lt");
                 var executionId = JsonHelper.GetValue(data, "execution");
-
+				// Trimm password to 15 characters
+				if(password.Length > 15) 
+				{
+					password = password.Substring(0, 15);
+				}
                 //Login
                 var loginResp = await tempHttpClient.PostAsync(Resources.PtcLoginUrl,
                     new FormUrlEncodedContent(
